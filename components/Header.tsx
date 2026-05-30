@@ -32,7 +32,7 @@ export function Header() {
             </Link>
           ))}
           <Link
-            href="/book-a-call"
+            href="/book"
             className="ml-2 inline-flex items-center justify-center rounded-md bg-brand-teal hover:bg-brand-teal-dark text-white text-sm font-semibold px-4 py-2 transition-colors"
           >
             Book a Call
@@ -41,7 +41,7 @@ export function Header() {
 
         {/* Mobile: simple book-a-call only (full mobile nav can come later) */}
         <Link
-          href="/book-a-call"
+          href="/book"
           className="md:hidden inline-flex items-center justify-center rounded-md bg-brand-teal hover:bg-brand-teal-dark text-white text-sm font-semibold px-3 py-1.5 transition-colors"
         >
           Book

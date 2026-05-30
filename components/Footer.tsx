@@ -23,16 +23,19 @@ export function Footer() {
             <li><Link href="/services" className="hover:text-brand-teal-light">Services</Link></li>
             <li><Link href="/blog" className="hover:text-brand-teal-light">Blog</Link></li>
             <li><Link href="/contact" className="hover:text-brand-teal-light">Contact</Link></li>
-            <li><Link href="/book-a-call" className="hover:text-brand-teal-light">Book a Call</Link></li>
+            <li><Link href="/book" className="hover:text-brand-teal-light">Book a Call</Link></li>
           </ul>
         </div>
 
         <div>
           <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Get in touch</h3>
           <p className="mt-4 text-sm text-slate-400">
-            Email: <a href="mailto:hello@capabilitycentre.com.au" className="hover:text-brand-teal-light">hello@capabilitycentre.com.au</a>
+            <a href="mailto:hello@capabilitycentre.com.au" className="hover:text-brand-teal-light">
+              hello@capabilitycentre.com.au
+            </a>
           </p>
-          <p className="mt-2 text-sm text-slate-400">Based in Australia</p>
+          <p className="mt-2 text-sm text-slate-400">Sydney, Australia</p>
+          <p className="mt-2 text-sm text-slate-400">Mon–Fri 9am–5pm</p>
         </div>
       </div>
 
