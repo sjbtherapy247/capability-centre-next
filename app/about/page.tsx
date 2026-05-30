@@ -27,24 +27,24 @@ export default async function AboutPage() {
 
   return (
     <>
-      <section className="bg-brand-navy text-white">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-20 md:py-28">
-          <p className="text-brand-teal-light text-xs font-semibold tracking-[0.25em] uppercase">
-            {heroEyebrow}
+      <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+        <p className="eyebrow text-teal">{heroEyebrow}</p>
+        <h1 className="mt-6 text-5xl md:text-7xl text-foreground">{heroHeading}</h1>
+        {heroSubheading && (
+          <p className="mt-8 text-lg md:text-xl leading-relaxed text-muted max-w-2xl">
+            {heroSubheading}
           </p>
-          <h1 className="mt-3 text-4xl md:text-5xl font-bold text-white">{heroHeading}</h1>
-          {heroSubheading && (
-            <p className="mt-6 text-lg text-slate-300 leading-relaxed">{heroSubheading}</p>
-          )}
-        </div>
+        )}
       </section>
+
+      <hr className="gold-rule mx-auto max-w-6xl" />
 
       <article className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-20">
         <PortableTextRenderer value={page?.body} />
-        <div className="mt-12">
+        <div className="mt-14">
           <Link
             href={ctaHref}
-            className="inline-flex items-center justify-center rounded-md bg-brand-teal hover:bg-brand-teal-dark text-white text-base font-semibold px-6 py-3 transition-colors"
+            className="inline-flex items-center justify-center rounded-md bg-teal hover:bg-teal-dark text-white text-sm font-semibold px-7 py-3.5 transition-colors"
           >
             {ctaLabel}
           </Link>

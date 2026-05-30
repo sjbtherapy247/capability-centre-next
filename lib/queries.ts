@@ -43,11 +43,15 @@ export type SiteSettings = {
   footerTagline?: string
 }
 
-export type HeroSlide = {
+export type Hero = {
   eyebrow?: string
   heading: string
   body?: string
   image?: SanityImage
+  ctaLabel?: string
+  ctaHref?: string
+  secondaryCtaLabel?: string
+  secondaryCtaHref?: string
 }
 
 export type ServiceCard = {
@@ -73,7 +77,7 @@ export type TestimonialDoc = {
 
 export type HomePage = {
   seo?: { metaTitle?: string; metaDescription?: string; ogImage?: SanityImage }
-  heroSlides?: HeroSlide[]
+  hero?: Hero
   servicesSection?: {
     eyebrow?: string
     heading?: string
@@ -189,10 +193,14 @@ export const SITE_SETTINGS_QUERY = groq`
 export const HOME_PAGE_QUERY = groq`
   *[_type == "homePage"][0]{
     seo,
-    heroSlides[]{
+    hero{
       eyebrow,
       heading,
       body,
+      ctaLabel,
+      ctaHref,
+      secondaryCtaLabel,
+      secondaryCtaHref,
       image ${IMAGE_FRAG}
     },
     servicesSection{

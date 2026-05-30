@@ -17,33 +17,30 @@ export const homePage = defineType({
       ],
     }),
     defineField({
-      name: 'heroSlides',
-      title: 'Hero Slides',
-      type: 'array',
-      of: [
+      name: 'hero',
+      title: 'Hero',
+      description: 'Single editorial hero — one statement, one CTA.',
+      type: 'object',
+      fields: [
+        { name: 'eyebrow', title: 'Eyebrow', type: 'string' },
         {
-          type: 'object',
-          name: 'heroSlide',
-          fields: [
-            { name: 'eyebrow', title: 'Eyebrow', type: 'string' },
-            {
-              name: 'heading',
-              title: 'Heading',
-              type: 'string',
-              validation: (Rule) => Rule.required(),
-            },
-            { name: 'body', title: 'Body', type: 'text', rows: 3 },
-            {
-              name: 'image',
-              title: 'Background Image',
-              type: 'image',
-              options: { hotspot: true },
-            },
-          ],
-          preview: {
-            select: { title: 'heading', subtitle: 'eyebrow', media: 'image' },
-          },
+          name: 'heading',
+          title: 'Heading',
+          type: 'string',
+          description: 'One strong, confident statement.',
+          validation: (Rule) => Rule.required(),
         },
+        { name: 'body', title: 'Body', type: 'text', rows: 3 },
+        {
+          name: 'image',
+          title: 'Background Image (optional)',
+          type: 'image',
+          options: { hotspot: true },
+        },
+        { name: 'ctaLabel', title: 'CTA Label', type: 'string' },
+        { name: 'ctaHref', title: 'CTA Link', type: 'string' },
+        { name: 'secondaryCtaLabel', title: 'Secondary CTA Label', type: 'string' },
+        { name: 'secondaryCtaHref', title: 'Secondary CTA Link', type: 'string' },
       ],
     }),
     defineField({

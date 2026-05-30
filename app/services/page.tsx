@@ -32,28 +32,27 @@ export default async function ServicesPage() {
 
   return (
     <>
-      <section className="bg-brand-navy text-white">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20 md:py-28">
-          <p className="text-brand-teal-light text-xs font-semibold tracking-[0.25em] uppercase">
-            {heroEyebrow}
-          </p>
-          <h1 className="mt-3 text-4xl md:text-5xl font-bold text-white max-w-3xl">
-            {heroHeading}
-          </h1>
-          <p className="mt-6 text-lg text-slate-300 max-w-2xl leading-relaxed">{heroSubheading}</p>
-        </div>
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+        <p className="eyebrow text-teal">{heroEyebrow}</p>
+        <h1 className="mt-6 text-5xl md:text-7xl text-foreground max-w-4xl">{heroHeading}</h1>
+        <p className="mt-8 max-w-2xl text-lg md:text-xl leading-relaxed text-muted">
+          {heroSubheading}
+        </p>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20 space-y-20">
+      <hr className="gold-rule mx-auto max-w-6xl" />
+
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20 space-y-24">
         {services.map((s, i) => {
           const url = imageUrl(s.image, { width: 1000 })
+          const reverse = i % 2 === 1
           return (
             <article
               key={s._id}
               id={s.slug}
-              className={`grid gap-10 lg:grid-cols-2 items-center scroll-mt-24 ${i % 2 === 1 ? 'lg:[&>div:first-child]:order-2' : ''}`}
+              className="grid gap-12 lg:grid-cols-2 items-center scroll-mt-24"
             >
-              <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-slate-100">
+              <div className={`relative aspect-[4/3] rounded-lg overflow-hidden bg-divider ${reverse ? 'lg:order-2' : ''}`}>
                 {url && (
                   <Image
                     src={url}
@@ -65,19 +64,24 @@ export default async function ServicesPage() {
                 )}
               </div>
               <div>
-                <p className="text-brand-teal font-semibold tracking-[0.2em] uppercase text-xs">
+                <p className="eyebrow text-gold">
                   {String(i + 1).padStart(2, '0')} — Service
                 </p>
-                <h2 className="mt-3 text-3xl md:text-4xl font-bold text-brand-navy">{s.title}</h2>
-                <p className="mt-4 text-lg text-slate-700 leading-relaxed">{s.shortDescription}</p>
+                <h2 className="mt-5 text-3xl md:text-5xl text-foreground">{s.title}</h2>
+                <p className="mt-6 text-lg leading-relaxed text-foreground/90">
+                  {s.shortDescription}
+                </p>
                 {s.longDescription && (
-                  <p className="mt-4 text-slate-600 leading-relaxed">{s.longDescription}</p>
+                  <p className="mt-4 text-base leading-relaxed text-muted">{s.longDescription}</p>
                 )}
                 <Link
                   href={`/services/${s.slug}`}
-                  className="mt-6 inline-flex items-center justify-center rounded-md bg-brand-teal hover:bg-brand-teal-dark text-white text-sm font-semibold px-5 py-2.5 transition-colors"
+                  className="mt-8 inline-flex items-center text-sm font-semibold text-teal hover:text-teal-dark transition-colors group"
                 >
-                  Read more →
+                  Read more
+                  <span aria-hidden className="ml-1.5 transition-transform group-hover:translate-x-0.5">
+                    →
+                  </span>
                 </Link>
               </div>
             </article>
@@ -86,33 +90,30 @@ export default async function ServicesPage() {
       </section>
 
       {pillars.length > 0 && (
-        <section className="bg-slate-50 border-y border-slate-200">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20">
-            <div className="max-w-2xl">
-              {pillarsSection?.eyebrow && (
-                <p className="text-brand-gold font-semibold tracking-[0.2em] uppercase text-xs">
-                  {pillarsSection.eyebrow}
-                </p>
-              )}
-              {pillarsSection?.heading && (
-                <h2 className="mt-3 text-3xl md:text-4xl font-bold text-brand-navy">
-                  {pillarsSection.heading}
-                </h2>
-              )}
-            </div>
-            <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-              {pillars.map((p, i) => (
-                <div key={`${p.title}-${i}`}>
-                  <div className="text-5xl font-bold text-brand-teal/20 leading-none">
-                    {String(i + 1).padStart(2, '0')}
-                  </div>
-                  <h3 className="mt-3 text-lg font-semibold text-brand-navy">{p.title}</h3>
-                  {p.body && (
-                    <p className="mt-2 text-sm text-slate-700 leading-relaxed">{p.body}</p>
-                  )}
+        <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20">
+          <hr className="gold-rule mb-20" />
+          <div className="max-w-2xl">
+            {pillarsSection?.eyebrow && (
+              <p className="eyebrow text-gold">{pillarsSection.eyebrow}</p>
+            )}
+            {pillarsSection?.heading && (
+              <h2 className="mt-5 text-3xl md:text-5xl text-foreground">
+                {pillarsSection.heading}
+              </h2>
+            )}
+          </div>
+          <div className="mt-14 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+            {pillars.map((p, i) => (
+              <div key={`${p.title}-${i}`} className="border-t border-divider pt-6">
+                <div className="font-display text-2xl text-gold leading-none">
+                  {String(i + 1).padStart(2, '0')}
                 </div>
-              ))}
-            </div>
+                <h3 className="mt-4 text-xl text-foreground">{p.title}</h3>
+                {p.body && (
+                  <p className="mt-3 text-sm leading-relaxed text-muted">{p.body}</p>
+                )}
+              </div>
+            ))}
           </div>
         </section>
       )}

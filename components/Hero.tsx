@@ -1,83 +1,65 @@
-'use client'
-
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
-import type { HeroSlide } from '@/lib/queries'
+import Link from 'next/link'
+import type { Hero as HeroData } from '@/lib/queries'
 import { imageUrl } from '@/lib/sanity.image'
 
-const ROTATE_MS = 6500
-
-export function Hero({ slides }: { slides: HeroSlide[] }) {
-  const [index, setIndex] = useState(0)
-
-  useEffect(() => {
-    if (slides.length <= 1) return
-    const id = setInterval(() => {
-      setIndex((i) => (i + 1) % slides.length)
-    }, ROTATE_MS)
-    return () => clearInterval(id)
-  }, [slides.length])
-
-  if (slides.length === 0) return null
+/**
+ * Editorial hero — single statement, single primary CTA, optional secondary.
+ * No carousel. Background image is optional; without one we lean on type.
+ */
+export function Hero({ hero }: { hero: HeroData }) {
+  const url = imageUrl(hero.image, { width: 2400 })
 
   return (
-    <section className="relative isolate overflow-hidden bg-brand-navy text-white">
-      {slides.map((slide, i) => {
-        const url = imageUrl(slide.image, { width: 2000 })
-        return (
-          <div
-            key={`${slide.heading}-${i}`}
-            className={`absolute inset-0 transition-opacity duration-1000 ${i === index ? 'opacity-100' : 'opacity-0'}`}
-            aria-hidden={i !== index}
-          >
-            {url && (
-              <Image
-                src={url}
-                alt=""
-                fill
-                priority={i === 0}
-                className="object-cover"
-                sizes="100vw"
-              />
-            )}
-            <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/90 via-brand-navy/70 to-brand-navy/50" />
-          </div>
-        )
-      })}
+    <section className="relative isolate overflow-hidden bg-background">
+      {url && (
+        <>
+          <Image
+            src={url}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-[0.18] dark:opacity-[0.12]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/85 to-background" />
+        </>
+      )}
 
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-28 md:py-40">
-        {slides.map((slide, i) => (
-          <div
-            key={`text-${slide.heading}-${i}`}
-            className={`transition-opacity duration-700 ${i === index ? 'opacity-100' : 'opacity-0 absolute inset-x-0 pointer-events-none'}`}
-            aria-hidden={i !== index}
-          >
-            {slide.eyebrow && (
-              <p className="text-brand-teal-light text-xs font-semibold tracking-[0.25em] uppercase">
-                {slide.eyebrow}
-              </p>
-            )}
-            <h1 className="mt-4 text-4xl md:text-6xl font-bold tracking-tight text-white max-w-3xl">
-              {slide.heading}
-            </h1>
-            {slide.body && (
-              <p className="mt-6 text-lg md:text-xl text-slate-200 max-w-2xl leading-relaxed">
-                {slide.body}
-              </p>
-            )}
-          </div>
-        ))}
+      <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-28 md:py-40">
+        {hero.eyebrow && (
+          <p className="eyebrow text-teal">{hero.eyebrow}</p>
+        )}
+        <h1 className="mt-6 text-5xl md:text-7xl text-foreground max-w-4xl">
+          {hero.heading}
+        </h1>
+        {hero.body && (
+          <p className="mt-8 max-w-2xl text-lg md:text-xl text-muted leading-relaxed">
+            {hero.body}
+          </p>
+        )}
 
-        {slides.length > 1 && (
-          <div className="mt-12 flex gap-2 relative">
-            {slides.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setIndex(i)}
-                aria-label={`Show slide ${i + 1}`}
-                className={`h-1.5 rounded-full transition-all ${i === index ? 'w-10 bg-brand-teal-light' : 'w-4 bg-white/40 hover:bg-white/60'}`}
-              />
-            ))}
+        {(hero.ctaLabel || hero.secondaryCtaLabel) && (
+          <div className="mt-12 flex flex-wrap items-center gap-5">
+            {hero.ctaLabel && hero.ctaHref && (
+              <Link
+                href={hero.ctaHref}
+                className="inline-flex items-center justify-center rounded-md bg-teal hover:bg-teal-dark text-white text-sm font-semibold tracking-wide px-7 py-3.5 transition-colors"
+              >
+                {hero.ctaLabel}
+              </Link>
+            )}
+            {hero.secondaryCtaLabel && hero.secondaryCtaHref && (
+              <Link
+                href={hero.secondaryCtaHref}
+                className="inline-flex items-center justify-center text-sm font-semibold tracking-wide text-foreground hover:text-teal transition-colors group"
+              >
+                {hero.secondaryCtaLabel}{' '}
+                <span aria-hidden className="ml-1.5 transition-transform group-hover:translate-x-0.5">
+                  →
+                </span>
+              </Link>
+            )}
           </div>
         )}
       </div>

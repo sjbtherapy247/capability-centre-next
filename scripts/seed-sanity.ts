@@ -79,8 +79,7 @@ async function main() {
   // -------- Images
   console.log('📸 Images...')
   const [
-    hero1,
-    hero2,
+    heroImage,
     imgLeadership,
     imgCoaching,
     imgConsulting,
@@ -89,7 +88,6 @@ async function main() {
     imgSales,
   ] = await Promise.all([
     uploadImage('iStock-146796597-2-1500x630.jpg', 'Leadership training session'),
-    uploadImage('iStock-172861621-1500x630.jpg', 'Executive coaching conversation'),
     uploadImage('iStock-146796597-845x321.jpg', 'Leadership & strategy'),
     uploadImage('iStock-157424388-845x321.jpg', 'Executive coaching'),
     uploadImage('iStock-157562595-845x321.jpg', 'Business consulting'),
@@ -227,22 +225,16 @@ async function main() {
       metaDescription:
         'Capability Centre provides executive training, coaching, mentoring and consulting for individuals and businesses.',
     },
-    heroSlides: [
-      {
-        _key: 'slide1',
-        eyebrow: 'Sales Performance',
-        heading: 'Hit your numbers — and your team’s potential.',
-        body: 'Our ATTRACT Sales™ methodology helps your sales team achieve all of its objectives and more.',
-        image: hero1,
-      },
-      {
-        _key: 'slide2',
-        eyebrow: 'Executive Coaching',
-        heading: 'One of the most powerful tools in business.',
-        body: 'Coaching unlocks performance, perspective and presence — for leaders ready to grow.',
-        image: hero2,
-      },
-    ],
+    hero: {
+      eyebrow: 'Capability Centre',
+      heading: 'Building capability in people, teams and organisations.',
+      body: 'Executive coaching, leadership development and business consulting — designed to lift performance where it counts.',
+      image: heroImage,
+      ctaLabel: 'Book a Call',
+      ctaHref: '/book',
+      secondaryCtaLabel: 'Explore Services',
+      secondaryCtaHref: '/services',
+    },
     servicesSection: {
       eyebrow: 'What we do',
       heading: 'Services tailored to grow capability.',

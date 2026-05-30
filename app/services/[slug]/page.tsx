@@ -45,43 +45,57 @@ export default async function ServicePage({
   ])
   if (!service) notFound()
 
-  const url = imageUrl(service.image, { width: 1400 })
+  const url = imageUrl(service.image, { width: 1600 })
   const ctaLabel = settings?.ctaLabel || 'Book a Call'
   const ctaHref = settings?.ctaHref || '/book'
 
   return (
-    <article className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-16">
-      <Link href="/services" className="text-sm text-brand-teal hover:underline">
-        ← All Services
+    <article className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-20">
+      <Link
+        href="/services"
+        className="inline-flex items-center text-sm font-medium text-teal hover:text-teal-dark transition-colors"
+      >
+        <span aria-hidden className="mr-1.5">←</span> All Services
       </Link>
-      <h1 className="mt-4 text-4xl md:text-5xl font-bold text-brand-navy">{service.title}</h1>
-      <p className="mt-4 text-xl text-slate-700 leading-relaxed">{service.shortDescription}</p>
+      <h1 className="mt-6 text-4xl md:text-6xl text-foreground">{service.title}</h1>
+      <p className="mt-6 text-xl leading-relaxed text-foreground/90">
+        {service.shortDescription}
+      </p>
       {url && (
-        <div className="relative aspect-[16/9] rounded-xl overflow-hidden bg-slate-100 mt-8">
-          <Image src={url} alt="" fill sizes="(min-width: 768px) 768px, 100vw" className="object-cover" />
+        <div className="relative aspect-[16/9] rounded-lg overflow-hidden bg-divider mt-10">
+          <Image
+            src={url}
+            alt=""
+            fill
+            sizes="(min-width: 768px) 768px, 100vw"
+            className="object-cover"
+          />
         </div>
       )}
       {service.longDescription && (
-        <p className="mt-8 text-lg text-slate-700 leading-relaxed">{service.longDescription}</p>
+        <p className="mt-10 text-lg leading-relaxed text-foreground/90">
+          {service.longDescription}
+        </p>
       )}
       <div className="mt-4">
         <PortableTextRenderer value={service.body} />
       </div>
       {service.outcomes && service.outcomes.length > 0 && (
-        <div className="mt-10 rounded-xl border border-slate-200 bg-slate-50 p-6">
-          <h2 className="text-sm font-semibold text-brand-gold uppercase tracking-wider">
-            Outcomes
-          </h2>
-          <ul className="mt-3 space-y-2 text-slate-700">
+        <div className="mt-12 border-t border-gold/40 pt-6">
+          <p className="eyebrow text-gold">Outcomes</p>
+          <ul className="mt-5 space-y-3 text-foreground/90">
             {service.outcomes.map((o) => (
-              <li key={o}>• {o}</li>
+              <li key={o} className="flex gap-3">
+                <span aria-hidden className="text-gold">•</span>
+                <span>{o}</span>
+              </li>
             ))}
           </ul>
         </div>
       )}
       <Link
         href={ctaHref}
-        className="mt-10 inline-flex items-center justify-center rounded-md bg-brand-teal hover:bg-brand-teal-dark text-white text-base font-semibold px-6 py-3 transition-colors"
+        className="mt-14 inline-flex items-center justify-center rounded-md bg-teal hover:bg-teal-dark text-white text-sm font-semibold px-7 py-3.5 transition-colors"
       >
         {ctaLabel}
       </Link>

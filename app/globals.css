@@ -1,47 +1,128 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #1e293b;
+/* -------------------------------------------------------------------------- */
+/*  Capability Centre — Executive Editorial                                    */
+/*  Light first, dark via prefers-color-scheme.                                */
+/* -------------------------------------------------------------------------- */
 
-  /* Capability Centre brand */
-  --brand-teal: #0d9488;
-  --brand-teal-dark: #0f766e;
-  --brand-teal-light: #14b8a6;
-  --brand-navy: #1e293b;
-  --brand-navy-dark: #0f172a;
-  --brand-gold: #ca8a04;
-  --brand-gold-light: #eab308;
-  --brand-cream: #fefce8;
-  --brand-gray: #64748b;
+:root {
+  /* Surfaces */
+  --background: #fafaf8;       /* cream */
+  --surface: #ffffff;          /* cards */
+  --divider: #f0ede8;          /* section dividers / cream-dark */
+
+  /* Text */
+  --foreground: #1a1a1a;       /* charcoal */
+  --muted: #5b5b58;            /* secondary text */
+
+  /* Brand */
+  --teal: #0d9488;
+  --teal-dark: #0f766e;
+  --teal-light: #5eead4;
+  --gold: #d4a853;
+  --gold-light: #f0d9a0;
+
+  /* Greys */
+  --charcoal: #1a1a1a;
+  --charcoal-mid: #1c2333;
+  --charcoal-deep: #0f1117;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f1117;     /* charcoal-deep */
+    --surface: #161922;
+    --divider: #1c2333;        /* charcoal-mid */
+    --foreground: #f0ede8;
+    --muted: #a8a7a2;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-divider: var(--divider);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted: var(--muted);
 
-  --color-brand-teal: var(--brand-teal);
-  --color-brand-teal-dark: var(--brand-teal-dark);
-  --color-brand-teal-light: var(--brand-teal-light);
-  --color-brand-navy: var(--brand-navy);
-  --color-brand-navy-dark: var(--brand-navy-dark);
-  --color-brand-gold: var(--brand-gold);
-  --color-brand-gold-light: var(--brand-gold-light);
-  --color-brand-cream: var(--brand-cream);
-  --color-brand-gray: var(--brand-gray);
+  /* Brand palette — used as bg-teal, text-gold, border-gold etc. */
+  --color-teal: var(--teal);
+  --color-teal-dark: var(--teal-dark);
+  --color-teal-light: var(--teal-light);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-cream: #fafaf8;
+  --color-cream-dark: #f0ede8;
+  --color-charcoal: var(--charcoal);
+  --color-charcoal-mid: var(--charcoal-mid);
+  --color-charcoal-deep: var(--charcoal-deep);
+
+  /* Legacy brand-* aliases kept for any straggling refs (will be removed once
+     all components are migrated). */
+  --color-brand-teal: var(--teal);
+  --color-brand-teal-dark: var(--teal-dark);
+  --color-brand-teal-light: var(--teal-light);
+  --color-brand-navy: var(--charcoal-mid);
+  --color-brand-navy-dark: var(--charcoal-deep);
+  --color-brand-gold: var(--gold);
+  --color-brand-gold-light: var(--gold-light);
+  --color-brand-cream: #fafaf8;
+  --color-brand-gray: var(--muted);
+
+  /* Fonts */
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-playfair), Georgia, "Times New Roman", serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  color: var(--brand-navy);
-  letter-spacing: -0.01em;
+/* Headings — Playfair Display for editorial weight. */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--foreground);
+  letter-spacing: -0.015em;
+  font-weight: 600;
+}
+h1 { line-height: 1.05; }
+h2 { line-height: 1.1; }
+h3 { line-height: 1.2; }
+
+h5, h6 {
+  font-family: var(--font-sans);
+  color: var(--foreground);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+/* Section eyebrow utility — used pervasively */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Thin gold rule between sections */
+.gold-rule {
+  border: 0;
+  border-top: 1px solid var(--gold);
+  opacity: 0.45;
+  margin: 0;
+}
+
+/* Selection */
+::selection {
+  background: var(--gold);
+  color: var(--charcoal);
 }

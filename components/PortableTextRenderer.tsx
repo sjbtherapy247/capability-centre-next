@@ -6,22 +6,22 @@ import { imageUrl, type SanityImage } from '@/lib/sanity.image'
 const components: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
-      <p className="mt-5 text-slate-700 leading-relaxed text-lg">{children}</p>
+      <p className="mt-6 text-lg leading-relaxed text-foreground/90">{children}</p>
     ),
     h2: ({ children }) => (
-      <h2 className="mt-12 text-3xl font-bold text-brand-navy">{children}</h2>
+      <h2 className="mt-14 text-3xl md:text-4xl text-foreground">{children}</h2>
     ),
     h3: ({ children }) => (
-      <h3 className="mt-10 text-2xl font-bold text-brand-navy">{children}</h3>
+      <h3 className="mt-10 text-2xl text-foreground">{children}</h3>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="mt-6 border-l-4 border-brand-teal pl-5 italic text-slate-700">
+      <blockquote className="mt-8 border-l-2 border-gold pl-6 italic text-foreground/85 font-display text-xl leading-relaxed">
         {children}
       </blockquote>
     ),
   },
   marks: {
-    strong: ({ children }) => <strong className="text-brand-navy">{children}</strong>,
+    strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
     em: ({ children }) => <em>{children}</em>,
     link: ({ value, children }) => {
       const href = (value as { href?: string } | undefined)?.href || '#'
@@ -29,7 +29,7 @@ const components: PortableTextComponents = {
       return (
         <a
           href={href}
-          className="text-brand-teal hover:underline"
+          className="text-teal hover:underline underline-offset-4"
           {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
         >
           {children}
@@ -39,10 +39,10 @@ const components: PortableTextComponents = {
   },
   list: {
     bullet: ({ children }) => (
-      <ul className="mt-5 list-disc pl-6 space-y-2 text-lg text-slate-700">{children}</ul>
+      <ul className="mt-6 list-disc pl-6 space-y-2 text-lg text-foreground/90">{children}</ul>
     ),
     number: ({ children }) => (
-      <ol className="mt-5 list-decimal pl-6 space-y-2 text-lg text-slate-700">{children}</ol>
+      <ol className="mt-6 list-decimal pl-6 space-y-2 text-lg text-foreground/90">{children}</ol>
     ),
   },
   types: {
@@ -51,8 +51,14 @@ const components: PortableTextComponents = {
       const url = imageUrl(image, { width: 1600 })
       if (!url) return null
       return (
-        <div className="my-8 relative aspect-[16/9] rounded-xl overflow-hidden bg-slate-100">
-          <Image src={url} alt={image.alt || ''} fill sizes="(min-width: 1024px) 768px, 100vw" className="object-cover" />
+        <div className="my-10 relative aspect-[16/9] rounded-lg overflow-hidden bg-divider">
+          <Image
+            src={url}
+            alt={image.alt || ''}
+            fill
+            sizes="(min-width: 1024px) 768px, 100vw"
+            className="object-cover"
+          />
         </div>
       )
     },

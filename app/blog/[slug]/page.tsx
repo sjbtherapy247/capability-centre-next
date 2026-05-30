@@ -65,48 +65,55 @@ export default async function BlogPostPage({
   const cover = imageUrl(post.coverImage, { width: 1600 })
 
   return (
-    <article className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-16">
-      <Link href="/blog" className="text-sm text-brand-teal hover:underline">
-        ← All posts
+    <article className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-20">
+      <Link
+        href="/blog"
+        className="inline-flex items-center text-sm font-medium text-teal hover:text-teal-dark transition-colors"
+      >
+        <span aria-hidden className="mr-1.5">←</span> All posts
       </Link>
-      <header className="mt-6">
-        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-brand-teal">
+      <header className="mt-8">
+        <p className="text-xs font-semibold tracking-[0.18em] uppercase text-gold">
           {formatDate(post.publishedAt)}
           {post.author ? ` · ${post.author}` : ''}
         </p>
-        <h1 className="mt-3 text-4xl md:text-5xl font-bold text-brand-navy leading-tight">
-          {post.title}
-        </h1>
+        <h1 className="mt-4 text-4xl md:text-6xl text-foreground leading-tight">{post.title}</h1>
         {post.excerpt && (
-          <p className="mt-5 text-xl text-slate-700 leading-relaxed">{post.excerpt}</p>
+          <p className="mt-6 text-xl leading-relaxed text-foreground/90">{post.excerpt}</p>
         )}
       </header>
       {cover && (
-        <div className="mt-10 relative aspect-[16/9] rounded-xl overflow-hidden bg-slate-100">
-          <Image src={cover} alt="" fill sizes="(min-width: 768px) 768px, 100vw" className="object-cover" />
+        <div className="mt-12 relative aspect-[16/9] rounded-lg overflow-hidden bg-divider">
+          <Image
+            src={cover}
+            alt=""
+            fill
+            sizes="(min-width: 768px) 768px, 100vw"
+            className="object-cover"
+          />
         </div>
       )}
       <div className="mt-4">
         <PortableTextRenderer value={post.body} />
       </div>
       {post.tags && post.tags.length > 0 && (
-        <div className="mt-10 flex flex-wrap gap-2">
+        <div className="mt-12 flex flex-wrap gap-2">
           {post.tags.map((tag) => (
             <span
               key={tag}
-              className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600"
+              className="inline-flex items-center rounded-full border border-divider px-3 py-1 text-xs font-medium text-muted"
             >
               {tag}
             </span>
           ))}
         </div>
       )}
-      <hr className="my-12 border-slate-200" />
+      <hr className="gold-rule my-16" />
       <div className="text-center">
-        <p className="text-slate-700">Want to put insights like these to work in your team?</p>
+        <p className="text-muted">Want to put insights like these to work in your team?</p>
         <Link
           href={ctaHref}
-          className="mt-4 inline-flex items-center justify-center rounded-md bg-brand-teal hover:bg-brand-teal-dark text-white text-base font-semibold px-6 py-3 transition-colors"
+          className="mt-5 inline-flex items-center justify-center rounded-md bg-teal hover:bg-teal-dark text-white text-sm font-semibold px-7 py-3.5 transition-colors"
         >
           {ctaLabel}
         </Link>

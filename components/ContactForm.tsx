@@ -4,6 +4,9 @@ import { useState } from 'react'
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 
+const inputClasses =
+  'mt-2 w-full rounded-md border border-divider bg-surface px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted focus:border-teal focus:outline-none focus:ring-2 focus:ring-teal/25 transition-colors'
+
 export function ContactForm() {
   const [status, setStatus] = useState<Status>('idle')
   const [errorMessage, setErrorMessage] = useState<string>('')
@@ -33,21 +36,15 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4">
+    <form onSubmit={onSubmit} className="space-y-5">
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-brand-navy">
+        <label htmlFor="name" className="text-sm font-medium text-foreground">
           Name
         </label>
-        <input
-          id="name"
-          name="name"
-          required
-          autoComplete="name"
-          className="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm focus:border-brand-teal focus:outline-none focus:ring-2 focus:ring-brand-teal/30"
-        />
+        <input id="name" name="name" required autoComplete="name" className={inputClasses} />
       </div>
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-brand-navy">
+        <label htmlFor="email" className="text-sm font-medium text-foreground">
           Email
         </label>
         <input
@@ -56,30 +53,20 @@ export function ContactForm() {
           type="email"
           required
           autoComplete="email"
-          className="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm focus:border-brand-teal focus:outline-none focus:ring-2 focus:ring-brand-teal/30"
+          className={inputClasses}
         />
       </div>
       <div>
-        <label htmlFor="subject" className="block text-sm font-medium text-brand-navy">
+        <label htmlFor="subject" className="text-sm font-medium text-foreground">
           Subject
         </label>
-        <input
-          id="subject"
-          name="subject"
-          className="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm focus:border-brand-teal focus:outline-none focus:ring-2 focus:ring-brand-teal/30"
-        />
+        <input id="subject" name="subject" className={inputClasses} />
       </div>
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-brand-navy">
+        <label htmlFor="message" className="text-sm font-medium text-foreground">
           Message
         </label>
-        <textarea
-          id="message"
-          name="message"
-          rows={6}
-          required
-          className="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm focus:border-brand-teal focus:outline-none focus:ring-2 focus:ring-brand-teal/30"
-        />
+        <textarea id="message" name="message" rows={6} required className={inputClasses} />
       </div>
       {/* honeypot */}
       <input
@@ -93,18 +80,18 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="inline-flex items-center justify-center rounded-md bg-brand-teal hover:bg-brand-teal-dark disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold px-5 py-2.5 transition-colors"
+        className="inline-flex items-center justify-center rounded-md bg-teal hover:bg-teal-dark disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold px-7 py-3 transition-colors"
       >
         {status === 'submitting' ? 'Sending…' : 'Send message'}
       </button>
 
       {status === 'success' && (
-        <p className="text-sm text-brand-teal-dark">
+        <p className="text-sm text-teal-dark">
           Thanks — message received. We&apos;ll be in touch shortly.
         </p>
       )}
       {status === 'error' && (
-        <p className="text-sm text-red-600">
+        <p className="text-sm text-red-600 dark:text-red-400">
           {errorMessage || 'Sorry, something went wrong. Please email us directly.'}
         </p>
       )}
