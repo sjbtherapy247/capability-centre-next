@@ -1,5 +1,9 @@
 import { defineField, defineType } from 'sanity'
 
+/**
+ * Generic page (About, Book, Contact, etc.) — a singleton-style document
+ * keyed by slug. Use `homePage` for the home page (richer schema).
+ */
 export const page = defineType({
   name: 'page',
   title: 'Page',
@@ -33,8 +37,9 @@ export const page = defineType({
       title: 'Hero',
       type: 'object',
       fields: [
+        { name: 'eyebrow', title: 'Eyebrow', type: 'string' },
         { name: 'heading', title: 'Heading', type: 'string' },
-        { name: 'subheading', title: 'Subheading', type: 'text', rows: 2 },
+        { name: 'subheading', title: 'Subheading', type: 'text', rows: 3 },
         { name: 'image', title: 'Background Image', type: 'image', options: { hotspot: true } },
         { name: 'ctaLabel', title: 'CTA Label', type: 'string' },
         { name: 'ctaHref', title: 'CTA Link', type: 'string' },
@@ -47,6 +52,17 @@ export const page = defineType({
       of: [
         { type: 'block' },
         { type: 'image', options: { hotspot: true } },
+      ],
+    }),
+    defineField({
+      name: 'sidebar',
+      title: 'Sidebar (optional)',
+      description:
+        'Used on pages like Book a Call to list focus areas next to the embed.',
+      type: 'object',
+      fields: [
+        { name: 'heading', title: 'Heading', type: 'string' },
+        { name: 'items', title: 'Items', type: 'array', of: [{ type: 'string' }] },
       ],
     }),
   ],

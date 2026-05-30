@@ -1,8 +1,11 @@
 import { NextResponse } from 'next/server'
 import { resend } from '@/lib/resend'
+import { getSiteSettings } from '@/lib/queries'
 
-const TO_EMAIL = process.env.CONTACT_TO_EMAIL || 'hello@capabilitycentre.com.au'
-const FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || 'Capability Centre <noreply@capabilitycentre.com.au>'
+const FALLBACK_TO = process.env.CONTACT_TO_EMAIL || 'hello@capabilitycentre.com.au'
+const FROM_EMAIL =
+  process.env.CONTACT_FROM_EMAIL ||
+  'Capability Centre <noreply@capabilitycentre.com.au>'
 
 type Payload = {
   name?: string
@@ -40,9 +43,23 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Invalid email' }, { status: 400 })
   }
 
+  // Pull the `to` address from Sanity siteSettings so Louise can change it herself.
+  let toEmail = FALLBACK_TO
+  try {
+    const settings = await getSiteSettings()
+    if (settings?.contactEmail) toEmail = settings.contactEmail
+  } catch (err) {
+    console.warn('[contact] Failed to load siteSettings.contactEmail, using fallback', err)
+  }
+
   if (!resend) {
     // Allows form to be safely tested before RESEND_API_KEY is set
-    console.warn('[contact] Resend not configured — message dropped:', { name, email, subject })
+    console.warn('[contact] Resend not configured — message dropped:', {
+      name,
+      email,
+      subject,
+      toEmail,
+    })
     return NextResponse.json({ ok: true, queued: false })
   }
 
@@ -51,7 +68,7 @@ export async function POST(req: Request) {
   try {
     await resend.emails.send({
       from: FROM_EMAIL,
-      to: TO_EMAIL,
+      to: toEmail,
       replyTo: email,
       subject: `[Capability Centre] ${subjectLine}`,
       html: `

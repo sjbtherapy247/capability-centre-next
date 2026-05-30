@@ -23,17 +23,25 @@ export const service = defineType({
       title: 'Short Description',
       type: 'text',
       rows: 3,
-      description: 'Used on the services index card.',
+      description: 'Used on cards and the services index.',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'longDescription',
+      title: 'Long Description',
+      type: 'text',
+      rows: 6,
+      description: 'Used on the services index detail block and the detail page intro.',
     }),
     defineField({
       name: 'icon',
-      title: 'Icon',
+      title: 'Icon (name)',
       type: 'string',
-      description: 'Lucide icon name (e.g. briefcase, users, target).',
+      description: 'Optional Lucide icon name (e.g. briefcase, users, target).',
     }),
     defineField({
       name: 'image',
-      title: 'Header Image',
+      title: 'Image',
       type: 'image',
       options: { hotspot: true },
     }),
@@ -44,7 +52,7 @@ export const service = defineType({
     }),
     defineField({
       name: 'body',
-      title: 'Body',
+      title: 'Body (Detail Page)',
       type: 'array',
       of: [
         { type: 'block' },
@@ -68,13 +76,7 @@ export const service = defineType({
     }),
   ],
   orderings: [
-    {
-      title: 'Display Order',
-      name: 'orderAsc',
-      by: [{ field: 'order', direction: 'asc' }],
-    },
+    { title: 'Display Order', name: 'orderAsc', by: [{ field: 'order', direction: 'asc' }] },
   ],
-  preview: {
-    select: { title: 'title', subtitle: 'shortDescription' },
-  },
+  preview: { select: { title: 'title', subtitle: 'shortDescription', media: 'image' } },
 })

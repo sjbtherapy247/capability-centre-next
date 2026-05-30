@@ -43,20 +43,11 @@ export const blogPost = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'categories',
-      title: 'Categories',
+      name: 'tags',
+      title: 'Tags',
       type: 'array',
       of: [{ type: 'string' }],
-      options: {
-        list: [
-          { title: 'Leadership', value: 'leadership' },
-          { title: 'Coaching', value: 'coaching' },
-          { title: 'Business Strategy', value: 'strategy' },
-          { title: 'Team Development', value: 'team' },
-          { title: 'Performance', value: 'performance' },
-          { title: 'Insights', value: 'insights' },
-        ],
-      },
+      options: { layout: 'tags' },
     }),
     defineField({
       name: 'body',

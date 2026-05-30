@@ -1,12 +1,22 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { blogPosts, getBlogPost } from '@/lib/content'
+import {
+  getAllBlogSlugs,
+  getBlogPostBySlug,
+  getSiteSettings,
+} from '@/lib/queries'
+import { imageUrl } from '@/lib/sanity.image'
+import { PortableTextRenderer } from '@/components/PortableTextRenderer'
+
+export const revalidate = 60
 
 type Params = { slug: string }
 
 export async function generateStaticParams() {
-  return blogPosts.map((p) => ({ slug: p.slug }))
+  const slugs = await getAllBlogSlugs()
+  return slugs.map((slug) => ({ slug }))
 }
 
 export async function generateMetadata({
@@ -15,17 +25,17 @@ export async function generateMetadata({
   params: Promise<Params>
 }): Promise<Metadata> {
   const { slug } = await params
-  const post = getBlogPost(slug)
+  const post = await getBlogPostBySlug(slug)
   if (!post) return { title: 'Post Not Found' }
   return {
-    title: post.title,
-    description: post.excerpt,
+    title: post.seo?.metaTitle || post.title,
+    description: post.seo?.metaDescription || post.excerpt,
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: 'article',
       publishedTime: post.publishedAt,
-      authors: [post.author],
+      authors: post.author ? [post.author] : undefined,
     },
   }
 }
@@ -38,32 +48,21 @@ function formatDate(iso: string) {
   })
 }
 
-/** Inline-bold markdown: turn **text** into <strong>. */
-function renderParagraph(p: string, key: number) {
-  const parts = p.split(/(\*\*[^*]+\*\*)/g).filter(Boolean)
-  return (
-    <p key={key} className="mt-5 text-slate-700 leading-relaxed text-lg">
-      {parts.map((part, i) =>
-        part.startsWith('**') && part.endsWith('**') ? (
-          <strong key={i} className="text-brand-navy">
-            {part.slice(2, -2)}
-          </strong>
-        ) : (
-          <span key={i}>{part}</span>
-        )
-      )}
-    </p>
-  )
-}
-
 export default async function BlogPostPage({
   params,
 }: {
   params: Promise<Params>
 }) {
   const { slug } = await params
-  const post = getBlogPost(slug)
+  const [post, settings] = await Promise.all([
+    getBlogPostBySlug(slug),
+    getSiteSettings(),
+  ])
   if (!post) notFound()
+
+  const ctaLabel = settings?.ctaLabel || 'Book a Call'
+  const ctaHref = settings?.ctaHref || '/book'
+  const cover = imageUrl(post.coverImage, { width: 1600 })
 
   return (
     <article className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-16">
@@ -72,17 +71,25 @@ export default async function BlogPostPage({
       </Link>
       <header className="mt-6">
         <p className="text-xs font-semibold tracking-[0.2em] uppercase text-brand-teal">
-          {formatDate(post.publishedAt)} · {post.author}
+          {formatDate(post.publishedAt)}
+          {post.author ? ` · ${post.author}` : ''}
         </p>
         <h1 className="mt-3 text-4xl md:text-5xl font-bold text-brand-navy leading-tight">
           {post.title}
         </h1>
-        <p className="mt-5 text-xl text-slate-700 leading-relaxed">{post.excerpt}</p>
+        {post.excerpt && (
+          <p className="mt-5 text-xl text-slate-700 leading-relaxed">{post.excerpt}</p>
+        )}
       </header>
-      <div className="mt-10">
-        {post.body.map((para, i) => renderParagraph(para, i))}
+      {cover && (
+        <div className="mt-10 relative aspect-[16/9] rounded-xl overflow-hidden bg-slate-100">
+          <Image src={cover} alt="" fill sizes="(min-width: 768px) 768px, 100vw" className="object-cover" />
+        </div>
+      )}
+      <div className="mt-4">
+        <PortableTextRenderer value={post.body} />
       </div>
-      {post.tags.length > 0 && (
+      {post.tags && post.tags.length > 0 && (
         <div className="mt-10 flex flex-wrap gap-2">
           {post.tags.map((tag) => (
             <span
@@ -98,10 +105,10 @@ export default async function BlogPostPage({
       <div className="text-center">
         <p className="text-slate-700">Want to put insights like these to work in your team?</p>
         <Link
-          href="/book"
+          href={ctaHref}
           className="mt-4 inline-flex items-center justify-center rounded-md bg-brand-teal hover:bg-brand-teal-dark text-white text-base font-semibold px-6 py-3 transition-colors"
         >
-          Book a Call
+          {ctaLabel}
         </Link>
       </div>
     </article>
