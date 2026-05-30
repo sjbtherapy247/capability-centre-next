@@ -2,7 +2,18 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1e293b;
+
+  /* Capability Centre brand */
+  --brand-teal: #0d9488;
+  --brand-teal-dark: #0f766e;
+  --brand-teal-light: #14b8a6;
+  --brand-navy: #1e293b;
+  --brand-navy-dark: #0f172a;
+  --brand-gold: #ca8a04;
+  --brand-gold-light: #eab308;
+  --brand-cream: #fefce8;
+  --brand-gray: #64748b;
 }
 
 @theme inline {
@@ -10,17 +21,27 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-brand-teal: var(--brand-teal);
+  --color-brand-teal-dark: var(--brand-teal-dark);
+  --color-brand-teal-light: var(--brand-teal-light);
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-navy-dark: var(--brand-navy-dark);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-gold-light: var(--brand-gold-light);
+  --color-brand-cream: var(--brand-cream);
+  --color-brand-gray: var(--brand-gray);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--brand-navy);
+  letter-spacing: -0.01em;
 }

@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Capability Centre
 
-## Getting Started
+Next.js 14+ App Router rebuild of [capabilitycentre.com.au](https://capabilitycentre.com.au) —
+Louise Manning's executive coaching, leadership and business consulting practice.
 
-First, run the development server:
+## Stack
 
-```bash
+- **Framework:** Next.js (App Router) + TypeScript
+- **Styling:** Tailwind CSS v4 (CSS-based config in `app/globals.css`)
+- **CMS:** Sanity (Studio mounted at `/studio`)
+- **Auth + DB:** Supabase
+- **Email:** Resend
+- **Booking:** Cal.com (embed)
+- **Hosting:** Vercel
+
+## Brand palette
+
+- Teal: `#0d9488` (`brand-teal`)
+- Navy: `#1e293b` (`brand-navy`)
+- Gold: `#ca8a04` (`brand-gold`)
+- Cream: `#fefce8` (`brand-cream`)
+
+Available as Tailwind utilities: `bg-brand-teal`, `text-brand-navy`, etc.
+
+## Getting started
+
+```pwsh
+npm install
+cp .env.example .env.local   # then fill in values
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Setup checklist
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- [ ] Run `npx sanity@latest init` — see [SANITY_SETUP.md](./SANITY_SETUP.md)
+- [ ] Create Vercel project — see [VERCEL_SETUP.md](./VERCEL_SETUP.md)
+- [ ] Get Resend API key
+- [ ] Create Supabase project (if needed for auth / form storage)
+- [ ] Configure Cal.com event type for `/book-a-call`
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+  layout.tsx        Root layout with Header + Footer
+  page.tsx          Home
+  about/            About page
+  services/         Services index + dynamic [slug]
+  blog/             Blog index (Sanity-driven)
+  book-a-call/      Cal.com embed
+  contact/          Contact form
+  studio/           Sanity Studio (catch-all)
+components/
+  Header.tsx
+  Footer.tsx
+lib/
+  sanity.ts         Sanity client + image URL builder
+  supabase.ts       Supabase client
+  resend.ts         Resend client
+sanity/
+  schemas/          siteSettings, page, service, testimonial, blogPost
+sanity.config.ts    Studio config
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Build & deploy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```pwsh
+npm run build       # always run before declaring done
+npm run start
+```
 
-## Deploy on Vercel
+## Notes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Migrated from WordPress at `capabilitycentre.com.au`
+- Content scrape pending — placeholder copy throughout
+- Logo asset pending — placeholder swoosh in Header/Footer
