@@ -4,7 +4,7 @@ import { visionTool } from '@sanity/vision'
 import { schemaTypes } from './sanity/schemas'
 import { structure } from './sanity/structure'
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '8spe3j52'
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'bv7pp5ma'
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production'
 
 export default defineConfig({

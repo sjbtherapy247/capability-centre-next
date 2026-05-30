@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { getSiteSettings } from '@/lib/queries'
+import { ThemeToggle } from '@/components/ThemeToggle'
 
 export async function Header() {
   const settings = await getSiteSettings()
@@ -35,6 +36,7 @@ export async function Header() {
               {item.label}
             </Link>
           ))}
+          <ThemeToggle />
           <Link
             href={ctaHref}
             className="ml-2 inline-flex items-center justify-center rounded-md bg-teal hover:bg-teal-dark text-white text-sm font-semibold px-5 py-2.5 transition-colors"
@@ -43,12 +45,15 @@ export async function Header() {
           </Link>
         </nav>
 
-        <Link
-          href={ctaHref}
-          className="md:hidden inline-flex items-center justify-center rounded-md bg-teal hover:bg-teal-dark text-white text-sm font-semibold px-3.5 py-2 transition-colors"
-        >
-          {ctaLabel.split(' ')[0]}
-        </Link>
+        <div className="md:hidden flex items-center gap-2">
+          <ThemeToggle />
+          <Link
+            href={ctaHref}
+            className="inline-flex items-center justify-center rounded-md bg-teal hover:bg-teal-dark text-white text-sm font-semibold px-3.5 py-2 transition-colors"
+          >
+            {ctaLabel.split(' ')[0]}
+          </Link>
+        </div>
       </div>
     </header>
   )

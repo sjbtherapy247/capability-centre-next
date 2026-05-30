@@ -14,7 +14,8 @@
  *   SANITY_API_TOKEN  (Editor+, write scope)
  */
 
-import 'dotenv/config'
+import dotenv from 'dotenv'
+dotenv.config({ path: '.env.local' })
 import { createClient } from '@sanity/client'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -42,7 +43,9 @@ const client = createClient({
   useCdn: false,
 })
 
-const IMAGES_DIR = path.resolve(process.cwd(), 'public', 'images')
+const IMAGES_DIR = path.resolve(
+  'C:/Users/sjb24/.openclaw/workspace/assets/capability-centre/images'
+)
 
 /** Upload an image (if local), return Sanity image ref structure. */
 async function uploadImage(filename: string, alt?: string) {
