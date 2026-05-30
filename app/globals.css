@@ -28,7 +28,7 @@
   --charcoal-deep: #0f1117;
 }
 
-@media (prefers-color-scheme: dark), :root.dark {
+@media (prefers-color-scheme: dark) {
   :root {
     --background: #0f1117;     /* charcoal-deep */
     --surface: #161922;
@@ -127,3 +127,14 @@ h5, h6 {
   color: var(--charcoal);
 }
 
+
+
+
+/* next-themes class-based dark mode */
+.dark {
+  --background: #0f1117;
+  --surface: #161922;
+  --divider: #1c2333;
+  --foreground: #f0ede8;
+  --muted: #a8a7a2;
+}
