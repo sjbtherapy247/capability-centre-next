@@ -7,8 +7,7 @@
 import { NextStudio } from 'next-sanity/studio'
 import config from '../../../sanity.config'
 
-// Studio is a fully interactive SPA — nothing to prerender.
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-static'
 
 export default function StudioPage() {
   return <NextStudio config={config} />
