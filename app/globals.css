@@ -54,18 +54,6 @@
   --color-charcoal-mid: var(--charcoal-mid);
   --color-charcoal-deep: var(--charcoal-deep);
 
-  /* Legacy brand-* aliases kept for any straggling refs (will be removed once
-     all components are migrated). */
-  --color-brand-teal: var(--teal);
-  --color-brand-teal-dark: var(--teal-dark);
-  --color-brand-teal-light: var(--teal-light);
-  --color-brand-navy: var(--charcoal-mid);
-  --color-brand-navy-dark: var(--charcoal-deep);
-  --color-brand-gold: var(--gold);
-  --color-brand-gold-light: var(--gold-light);
-  --color-brand-cream: #fafaf8;
-  --color-brand-gray: var(--muted);
-
   /* Fonts */
   --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-display: var(--font-playfair), Georgia, "Times New Roman", serif;

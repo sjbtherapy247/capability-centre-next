@@ -184,7 +184,7 @@ function UnseededHomePage() {
       </p>
       <p className="mt-4 text-sm text-muted">
         Or open the{' '}
-        <Link href="/studio" className="text-teal hover:underline underline-offset-4">
+        <Link href="/cc-admin" className="text-teal hover:underline underline-offset-4">
           Sanity Studio
         </Link>{' '}
         and start editing.

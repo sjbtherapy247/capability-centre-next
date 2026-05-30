@@ -15,11 +15,13 @@ type Payload = {
   company_hp?: string
 }
 
-function escape(s: string) {
+function escapeHtml(s: string) {
   return s
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
 }
 
 export async function POST(req: Request) {
@@ -73,11 +75,11 @@ export async function POST(req: Request) {
       subject: `[Capability Centre] ${subjectLine}`,
       html: `
         <h2>New website enquiry</h2>
-        <p><strong>Name:</strong> ${escape(name)}</p>
-        <p><strong>Email:</strong> ${escape(email)}</p>
-        <p><strong>Subject:</strong> ${escape(subjectLine)}</p>
+        <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+        <p><strong>Subject:</strong> ${escapeHtml(subjectLine)}</p>
         <p><strong>Message:</strong></p>
-        <p>${escape(message).replace(/\n/g, '<br>')}</p>
+        <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
       `,
     })
   } catch (err) {

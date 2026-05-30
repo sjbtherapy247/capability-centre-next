@@ -1,8 +1,8 @@
 import { createClient, type SanityClient } from 'next-sanity'
-import imageUrlBuilder from '@sanity/image-url'
+import { createImageUrlBuilder } from '@sanity/image-url'
 import type { Image } from 'sanity'
 
-type ImageUrlBuilder = ReturnType<ReturnType<typeof imageUrlBuilder>['image']>
+type ImageUrlBuilder = ReturnType<ReturnType<typeof createImageUrlBuilder>['image']>
 
 export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || ''
 export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production'
@@ -31,7 +31,7 @@ export const sanityClient: SanityClient = projectId
     })
   : makeStubClient()
 
-const builder = projectId ? imageUrlBuilder({ projectId, dataset }) : null
+const builder = projectId ? createImageUrlBuilder({ projectId, dataset }) : null
 
 /** Stub image builder that returns an empty URL — used pre-Sanity-init. */
 function makeStubBuilder(): ImageUrlBuilder {
