@@ -28,15 +28,12 @@
   --charcoal-deep: #0f1117;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0f1117;     /* charcoal-deep */
-    --surface: #161922;
-    --divider: #1c2333;        /* charcoal-mid */
-    --foreground: #f0ede8;
-    --muted: #a8a7a2;
-  }
-}
+/* Dark mode is driven by next-themes adding a `.dark` class to <html>.
+   With `enableSystem`, that class is toggled to match the user's OS
+   preference automatically; the user can also override it manually via
+   the ThemeToggle. We deliberately don't use @media (prefers-color-scheme)
+   here because it would override the user's manual choice on dark-OS
+   machines. */
 
 @theme inline {
   --color-background: var(--background);
